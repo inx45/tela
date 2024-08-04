@@ -1,0 +1,96 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Analytics {
+  createdAt            DateTime @default(now())
+  customerBehaviorData Json?
+  financialHealthData  Json?
+  id                   String   @id @default(cuid())
+  inventoryData        Json?
+  salesData            Json?
+  updatedAt            DateTime @updatedAt
+}
+
+model Dashboard {
+  createdAt       DateTime @default(now())
+  customerMetrics Json?
+  expenses        Float?
+  id              String   @id @default(cuid())
+  profitMargins   Float?
+  sales           Float?
+  updatedAt       DateTime @updatedAt
+}
+
+model ToolTracking {
+  createdAt  DateTime @default(now())
+  employeeId String?
+  id         String   @id @default(cuid())
+  storeId    String?
+  toolName   String?
+  updatedAt  DateTime @updatedAt
+}
+
+model Expense {
+  amount      Float?
+  category    String?
+  createdAt   DateTime  @default(now())
+  date        DateTime?
+  description String?
+  id          String    @id @default(cuid())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Customer {
+  address   String?
+  createdAt DateTime @default(now())
+  email     String?
+  id        String   @id @default(cuid())
+  name      String?
+  phone     String?
+  updatedAt DateTime @updatedAt
+}
+
+model Inventory {
+  alertLevel   Int?
+  createdAt    DateTime @default(now())
+  id           String   @id @default(cuid())
+  productName  String?
+  quantity     Int?
+  reorderLevel Int?
+  updatedAt    DateTime @updatedAt
+}
+
+model Invoice {
+  amount    Float?
+  clientId  String?
+  createdAt DateTime           @default(now())
+  dueDate   DateTime?
+  id        String             @id @default(cuid())
+  status    EnumInvoiceStatus?
+  updatedAt DateTime           @updatedAt
+}
+
+model CrossBorderPayments {
+  conversionRate    Float?
+  createdAt         DateTime                       @default(now())
+  currency          String?
+  id                String                         @id @default(cuid())
+  paymentGateway    String?
+  status            EnumCrossBorderPaymentsStatus?
+  transactionAmount Float?
+  updatedAt         DateTime                       @updatedAt
+}
+
+enum EnumInvoiceStatus {
+  Option1
+}
+
+enum EnumCrossBorderPaymentsStatus {
+  Option1
+}
